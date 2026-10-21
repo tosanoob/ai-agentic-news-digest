@@ -51,7 +51,8 @@ tests/test_ledger.py            Automated regression tests
 
 ```bash
 python -m unittest discover -s tests -v
-python scripts/ledger.py validate data/stories.jsonl
+python scripts/ledger.py validate
+# Or for a nondefault path: python scripts/ledger.py --ledger PATH validate
 python scripts/ledger.py check --story-id example-event --update-id initial
 ```
 
