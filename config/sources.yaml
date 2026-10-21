@@ -1,0 +1,40 @@
+# Editorial configuration; not an automated crawler configuration.
+timezone: Asia/Singapore
+schedule: weekdays_08_00_flexible
+language: vi
+digest_length: deep_research
+target_items: 5-10
+priority_topics:
+  - breaking_news
+  - model_and_agent_releases
+  - agent_architecture_and_orchestration
+  - safety_security_and_observability
+  - mcp_a2a_protocols
+  - research_papers
+  - verified_benchmarks
+  - github_releases
+  - enterprise_agent_use_cases
+preferred_sources:
+  primary:
+    - openai.com
+    - anthropic.com
+    - blog.google
+    - cloud.google.com
+    - microsoft.com
+    - github.blog
+    - github.com
+    - nvidia.com
+    - arxiv.org
+  independent:
+    - reuters.com
+    - nature.com
+    - science.org
+policy:
+  use_original_event_dates: true
+  group_syndicated_articles: true
+  same_event_uses_stable_story_id: true
+  material_updates_get_new_update_id: true
+  similarity_is_review_not_auto_rejection: true
+  no_unverified_benchmarks: true
+  label_preprints: true
+  failure_mode: best_effort_with_explicit_disclosure

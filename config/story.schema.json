@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archived digest story or material update",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "story_id",
+    "update_id",
+    "title",
+    "event_date",
+    "recorded_at",
+    "digest_date",
+    "category",
+    "canonical_url",
+    "source_urls",
+    "change_summary"
+  ],
+  "properties": {
+    "story_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 160
+    },
+    "update_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 100,
+      "description": "initial, general-availability, security-fix, ..."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 300
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Original announcement or material update date"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when included in archived digest, not proof of delivery"
+    },
+    "digest_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date in Asia/Singapore"
+    },
+    "category": {
+      "enum": [
+        "breaking",
+        "model_release",
+        "agent_framework",
+        "paper",
+        "benchmark",
+        "github_release",
+        "security",
+        "protocol",
+        "enterprise",
+        "policy",
+        "other"
+      ]
+    },
+    "canonical_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "source_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "change_summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1000
+    }
+  }
+}
