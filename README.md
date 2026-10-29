@@ -2,7 +2,7 @@
 
 A GitHub-backed, event-level news ledger for the **ChatGPT AI Agentic Deep Research Digest**.
 
-**Schedule:** Monday–Friday, 08:00 Asia/Singapore (flexible, within ~1 hour). This repository **does not schedule or deliver** ChatGPT notifications; the existing ChatGPT scheduled task does. GitHub Actions here runs validation only.
+**Schedule:** Daily (Monday–Sunday), 08:00 Asia/Singapore (flexible, within ~1 hour). This repository **does not schedule or deliver** ChatGPT notifications; the existing ChatGPT scheduled task does. GitHub Actions here runs validation only.
 
 ## How it works
 

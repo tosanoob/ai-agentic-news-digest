@@ -1,6 +1,6 @@
 # Editorial configuration; not an automated crawler configuration.
 timezone: Asia/Singapore
-schedule: weekdays_08_00_flexible
+schedule: daily_08_00_flexible
 language: vi
 digest_length: deep_research
 target_items: 5-10
