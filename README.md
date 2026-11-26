@@ -2,7 +2,7 @@
 
 A GitHub-backed, event-level news ledger for the **ChatGPT AI Agentic Deep Research Digest**.
 
-**Schedule:** Daily (Monday–Sunday), 08:00 Asia/Singapore (flexible, within ~1 hour). The 07:00 Vietnam-time ChatGPT task researches and delivers the digest. GitHub Actions gathers candidate links near 06:37 Vietnam time and publishes reviewed bundles; it does not send a second digest. See [the Actions runbook](docs/ACTIONS.md).
+**Schedule:** Daily (Monday–Sunday), 08:00 Asia/Singapore (flexible, within ~1 hour). The 07:00 Vietnam-time ChatGPT task researches and delivers the digest. GitHub Actions gathers candidate links near 06:37 Vietnam time, retains pre-editorial metadata on the [candidate-log branch](https://github.com/tosanoob/ai-agentic-news-digest/tree/candidate-log), and publishes reviewed bundles; it does not send a second digest. See [the Actions runbook](docs/ACTIONS.md).
 
 ## How it works
 

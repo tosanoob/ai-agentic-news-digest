@@ -1,13 +1,15 @@
 """Read news feeds and apply a reviewed editorial bundle; never sends notifications."""
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html import unescape
+from http.client import HTTPException
 import argparse
 import json
 from pathlib import Path
 import re
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
@@ -38,13 +40,32 @@ def timestamp(value):
             pass
     return None
 
-def parse_feed(body, name, primary, cutoff, now):
+PRIVATE_QUERY = re.compile(r"^(?:.*token.*|.*signature.*|.*secret.*|.*password.*|.*credential.*|api[_-]?key|auth(?:orization)?|sig|key|code|session(?:id)?)$", re.I)
+
+def public_url(raw):
+    raw = raw.strip()
+    try:
+        parts = urlsplit(raw)
+        if (len(raw) > 2048 or any(c.isspace() for c in raw) or parts.scheme != "https"
+                or not parts.hostname or parts.username is not None or parts.password is not None
+                or any(PRIVATE_QUERY.fullmatch(k) for k, _ in parse_qsl(parts.query, keep_blank_values=True))):
+            return None
+        ledger.normalize_url(raw)
+        return urlunsplit(parts._replace(fragment=""))
+    except ValueError:
+        return None
+
+def inspect_feed(body, name, primary, cutoff, now):
+    # Bound XML input at the transport boundary and never expand declared entities.
+    xml_probe = body.replace(b"\0", b"").upper()
+    if b"<!DOCTYPE" in xml_probe or b"<!ENTITY" in xml_probe:
+        raise ValueError("feed XML contains a declaration")
     root = ET.fromstring(body)
     if root.tag not in ("rss", ATOM+"feed"):
         raise ValueError("expected RSS or Atom")
     nodes = root.findall("./channel/item") if root.tag == "rss" else root.findall(ATOM+"entry")
-    items = []
-    dated = 0
+    rows = []
+    counts = Counter()
     for item in nodes:
         if root.tag == "rss":
             url = item.findtext("link", "")
@@ -52,30 +73,47 @@ def parse_feed(body, name, primary, cutoff, now):
             summary = text(item.findtext("description", ""))
             dt = timestamp(item.findtext("pubDate", ""))
         else:
-            url = next((l.get("href", "") for l in item.findall(ATOM+"link") if l.get("rel", "alternate") == "alternate"), "")
+            url = next((l.get("href", "") for l in item.findall(ATOM+"link")
+                        if l.get("rel", "alternate") == "alternate"), "")
             title = text(item.findtext(ATOM+"title", ""))
             summary = text(item.findtext(ATOM+"summary", "") or item.findtext(ATOM+"content", ""))
             dt = timestamp(item.findtext(ATOM+"published", "") or item.findtext(ATOM+"updated", ""))
         if dt:
-            dated += 1
-        if not dt or not cutoff <= dt <= now or not title or not TOPIC.search(title+" "+summary[:1400]):
+            counts["dated"] += 1
+        if dt and not cutoff <= dt <= now:
+            counts["outside_window"] += 1
             continue
-        if name=="arxiv-ai" and not STRONG_ARXIV.search(title+" "+summary[:1000]):
-            continue
-        try:
-            if urlsplit(url).scheme != "https" or not urlsplit(url).hostname:
-                continue
-            ledger.normalize_url(url)
-        except ValueError:
-            continue
-        items.append({"source":name, "primary_feed":primary, "title":title[:300], "url":url,
-                      "feed_date":dt.isoformat()})
-    if not nodes or not dated:
+        url = public_url(url)
+        flags = []
+        if not dt:
+            flags.append("missing_date")
+        if not title:
+            flags.append("missing_title")
+        if not url:
+            flags.append("missing_or_unsafe_url")
+        if not TOPIC.search(title+" "+summary[:1400]):
+            flags.append("topic_filter")
+        if name == "arxiv-ai" and not STRONG_ARXIV.search(title+" "+summary[:1000]):
+            flags.append("arxiv_topic_filter")
+        counts.update(flags)
+        if not flags:
+            counts["matched"] += 1
+        rows.append({"source":name, "primary_feed":primary, "title":title[:500] or None,
+                     "url":url, "feed_date":dt.isoformat() if dt else None, "flags":flags})
+    statistics = {"total":len(nodes), "dated":counts["dated"], "outside_window":counts["outside_window"],
+                  "matched":counts["matched"], "raw_rows":len(rows)}
+    return statistics, rows
+
+def parse_feed(body, name, primary, cutoff, now):
+    """Compatibility helper for the keyword/date screened list."""
+    stats, rows = inspect_feed(body, name, primary, cutoff, now)
+    if not stats["dated"]:
         raise ValueError("empty feed or no parseable dates")
-    return len(nodes), items
+    return stats["total"], [{k:v for k,v in r.items() if k != "flags"} for r in rows if not r["flags"]]
 
 def fetch(source, cutoff, now):
     name, url, primary = source
+    status = {"source":name, "feed_url":url, "primary_feed":primary}
     try:
         request = Request(url, headers={"User-Agent":"AgenticDigestFeedReader/1.0",
                                        "Accept":"application/rss+xml, application/atom+xml, application/xml, text/xml"})
@@ -83,29 +121,76 @@ def fetch(source, cutoff, now):
             body = response.read(2_000_001)
             if len(body) > 2_000_000:
                 raise ValueError("feed exceeds 2 MB")
-        total, items = parse_feed(body, name, primary, cutoff, now)
-        return {"source":name, "ok":True, "total":total, "matched":len(items)}, items
-    except (OSError, ValueError, ET.ParseError) as error:
-        return {"source":name, "ok":False, "error":str(error)[:200]}, []
+        stats, rows = inspect_feed(body, name, primary, cutoff, now)
+        status.update(stats, ok=bool(stats["dated"]))
+        if not status["ok"]:
+            status["error"] = "empty_feed_or_no_parseable_dates"
+        return status, rows
+    except (OSError, ValueError, ET.ParseError, HTTPException) as error:
+        # Exception messages can contain response locations; don't persist them.
+        return dict(status, ok=False, error=type(error).__name__,
+                    http_status=getattr(error, "code", None), total=0, dated=0,
+                    matched=0, outside_window=0, raw_rows=0), []
 
-def collect(output, days, now=None):
+def collect(output, days, now=None, raw_output=None):
     now = now or datetime.now(timezone.utc)
     cutoff = now - timedelta(days=days)
     with ThreadPoolExecutor(max_workers=5) as pool:
         parts = list(pool.map(lambda s: fetch(s,cutoff,now), SOURCES))
-    known = {ledger.normalize_url(r["canonical_url"]) for r in ledger.load()}
+    try:
+        known = {ledger.normalize_url(url) for r in ledger.load() for url in r["source_urls"]}
+        ledger_ok = True
+    except (OSError, ValueError, TypeError, KeyError):
+        # Preserve the collection even when the ledger was unreadable.
+        known, ledger_ok = set(), False
     unique = {}
-    for _, items in parts:
-        for item in sorted(items, key=lambda i:i["feed_date"], reverse=True)[:30 if items and items[0]["source"]=="arxiv-ai" else 20]:
-            link = ledger.normalize_url(item["url"])
-            if link not in known and (link not in unique or item["primary_feed"]):
-                unique[link] = item
-    out = {"as_of":now.isoformat(), "window_days":days, "sources":[status for status,_ in parts],
-           "candidates":sorted(unique.values(), key=lambda i:(i["primary_feed"],i["feed_date"]), reverse=True)[:120]}
+    raw = []
+    seen = set()
+    for status, rows in parts:
+        cap = 30 if status["source"] == "arxiv-ai" else 20
+        status["shortlist_cap"] = cap
+        status["primary_feed"] = next(x[2] for x in SOURCES if x[0]==status["source"])
+        ordered = sorted(rows, key=lambda r:r["feed_date"] or "", reverse=True)
+        ranked = 0
+        for item in ordered:
+            flags = item["flags"]
+            matched = not flags
+            key = ledger.normalize_url(item["url"]) if item["url"] else None
+            if key:
+                if key in known:
+                    flags.append("seen_in_ledger")
+                if key in seen:
+                    flags.append("duplicate_url_in_scan")
+                seen.add(key)
+            if matched and key not in known and (key not in unique or (item["primary_feed"] and not unique[key]["primary_feed"])):
+                ranked += 1
+                if ranked > cap:
+                    flags.append("source_shortlist_cap")
+                else:
+                    unique[key] = item
+            raw.append(item)
+    shortlist = sorted(unique.values(), key=lambda i:(i["primary_feed"],i["feed_date"]), reverse=True)
+    for item in shortlist:
+        item["shortlisted"] = True
+    for item in raw:
+        item.setdefault("shortlisted", False)
+    for status, rows in parts:
+        status["flags"] = dict(Counter(flag for row in rows for flag in row["flags"]))
+        status["shortlisted"] = sum(row["shortlisted"] for row in rows)
+    health = ("degraded" if not ledger_ok or not any(s["ok"] and s["primary_feed"] for s,_ in parts)
+              else "ok" if all(s["ok"] for s,_ in parts) else "partial")
+    out = {"schema_version":2, "as_of":now.isoformat(), "window_start":cutoff.isoformat(),
+           "scan_date_ict":now.astimezone(ZoneInfo("Asia/Ho_Chi_Minh")).date().isoformat(),
+           "window_days":days, "status":health,
+           "ledger_ok":ledger_ok, "sources":[status for status,_ in parts], "raw_rows":len(raw),
+           "candidate_count":len(shortlist), "candidates":shortlist}
+    if raw_output:
+        raw_output.write_text("".join(json.dumps(row,ensure_ascii=False,separators=(",",":"))+"\n" for row in raw),
+                              encoding="utf-8")
     output.write_text(json.dumps(out, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    print(json.dumps({"sources":out["sources"],"candidates":len(out["candidates"])},ensure_ascii=False))
-    if not any(status["ok"] for status,_ in parts if status["source"]!="lobsters-ai"):
-        raise ValueError("no primary source was retrieved")
+    print(json.dumps({k:v for k,v in out.items() if k!="candidates"},ensure_ascii=False))
+    if health == "degraded":
+        raise ValueError("no primary source retrieved or ledger unreadable; raw diagnostics are available")
 
 def plan(bundle, root=ROOT, now=None):
     """Validate before staging any files; Git commit/push is outside this function."""
@@ -177,11 +262,11 @@ def apply(bundlepath, root=ROOT, dry_run=False, expected_date=None):
 def main():
     p=argparse.ArgumentParser()
     s=p.add_subparsers(dest="cmd",required=True)
-    c=s.add_parser("collect"); c.add_argument("--output",type=Path,required=True); c.add_argument("--days",type=int,choices=range(1,8),default=3)
+    c=s.add_parser("collect"); c.add_argument("--output",type=Path,required=True); c.add_argument("--days",type=int,choices=range(1,8),default=3); c.add_argument("--raw-output",type=Path)
     a=s.add_parser("apply"); a.add_argument("bundle",type=Path); a.add_argument("--dry-run",action="store_true"); a.add_argument("--expected-date")
     args=p.parse_args()
     try:
-        if args.cmd=="collect": collect(args.output,args.days)
+        if args.cmd=="collect": collect(args.output,args.days,raw_output=args.raw_output)
         else: apply(args.bundle,dry_run=args.dry_run,expected_date=args.expected_date)
     except (OSError, ValueError, TypeError, KeyError) as error:
         p.exit(1,f"digest: {error}\n")
