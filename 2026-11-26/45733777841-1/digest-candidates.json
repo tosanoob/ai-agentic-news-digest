@@ -1,0 +1,439 @@
+{
+  "schema_version": 2,
+  "as_of": "2026-11-26T01:09:21.950002+00:00",
+  "window_start": "2026-11-23T01:09:21.950002+00:00",
+  "scan_date_ict": "2026-11-26",
+  "window_days": 3,
+  "status": "partial",
+  "ledger_ok": true,
+  "sources": [
+    {
+      "source": "github-changelog",
+      "feed_url": "https://github.blog/changelog/feed/",
+      "primary_feed": true,
+      "ok": false,
+      "error": "ValueError",
+      "http_status": null,
+      "total": 0,
+      "dated": 0,
+      "matched": 0,
+      "outside_window": 0,
+      "raw_rows": 0,
+      "shortlist_cap": 20,
+      "flags": {},
+      "shortlisted": 0
+    },
+    {
+      "source": "openai",
+      "feed_url": "https://openai.com/news/rss.xml",
+      "primary_feed": true,
+      "total": 1430,
+      "dated": 1430,
+      "outside_window": 1422,
+      "matched": 5,
+      "raw_rows": 8,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {
+        "topic_filter": 3
+      },
+      "shortlisted": 5
+    },
+    {
+      "source": "arxiv-ai",
+      "feed_url": "https://rss.arxiv.org/rss/cs.AI",
+      "primary_feed": true,
+      "total": 447,
+      "dated": 447,
+      "outside_window": 0,
+      "matched": 133,
+      "raw_rows": 447,
+      "ok": true,
+      "shortlist_cap": 30,
+      "flags": {
+        "arxiv_topic_filter": 314,
+        "topic_filter": 47,
+        "source_shortlist_cap": 103
+      },
+      "shortlisted": 30
+    },
+    {
+      "source": "huggingface",
+      "feed_url": "https://huggingface.co/blog/feed.xml",
+      "primary_feed": true,
+      "total": 917,
+      "dated": 917,
+      "outside_window": 913,
+      "matched": 3,
+      "raw_rows": 4,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {
+        "topic_filter": 1
+      },
+      "shortlisted": 3
+    },
+    {
+      "source": "lobsters-ai",
+      "feed_url": "https://lobste.rs/t/ai.rss",
+      "primary_feed": false,
+      "total": 25,
+      "dated": 25,
+      "outside_window": 23,
+      "matched": 0,
+      "raw_rows": 2,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {
+        "topic_filter": 2
+      },
+      "shortlisted": 0
+    }
+  ],
+  "raw_rows": 461,
+  "candidate_count": 38,
+  "candidates": [
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Where scientists draw the line on AI agents",
+      "url": "https://huggingface.co/blog/allenai/where-scientists-draw-the-line-on-ai-agents",
+      "feed_date": "2026-11-25T18:52:55+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "An Indic Voice Agent with CUGA",
+      "url": "https://huggingface.co/blog/ibm-research/an-indic-voice-agent-with-cuga",
+      "feed_date": "2026-11-25T10:22:09+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Irreducible Governance Structure for Autonomous Agent Systems: Fair Allocation, Strategy-Proofness, and Multi-Scale Composition",
+      "url": "https://arxiv.org/abs/2611.31284",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "What People Choose Not to Say: A Multimodal Benchmark for Fine-Grained Information Manipulation in Conversations",
+      "url": "https://arxiv.org/abs/2611.31346",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "ContextLure: Exploiting Benign Conversation History for Indirect Prompt Injection",
+      "url": "https://arxiv.org/abs/2611.31424",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Learning What vs. Learning How: Decomposing Task and Interface Competence in Agentic Training",
+      "url": "https://arxiv.org/abs/2611.31427",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Taxi: Analyzing Agents at (Real) Scale",
+      "url": "https://arxiv.org/abs/2611.31457",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "SpatialCraft: Evolving Procedural Intelligence from Experience and Skills for Spatial Reasoning Agents",
+      "url": "https://arxiv.org/abs/2611.31475",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Evaluating Frontier-Model Agent Skills with Open-Weight Models in a Science Gateway",
+      "url": "https://arxiv.org/abs/2611.31480",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "PatientFlowSynth: Evaluating FHIR Agents with Matched Patient Charts",
+      "url": "https://arxiv.org/abs/2611.31521",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "One Step, Four Clocks: How GUI Agents Fall Out of Step",
+      "url": "https://arxiv.org/abs/2611.31522",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Agent Evaluation Without Ground Truth: A Null Proportion Perspective",
+      "url": "https://arxiv.org/abs/2611.31539",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Agent Recovery Gone Wrong: Measuring Harm Beyond Duplicate Calls",
+      "url": "https://arxiv.org/abs/2611.31554",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "COGENT: A Modular Cognitive Architecture for Agentic User Simulation",
+      "url": "https://arxiv.org/abs/2611.31559",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Off-the-Shelf Autonomous Agents for Game Playtesting",
+      "url": "https://arxiv.org/abs/2611.31570",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Multi-agent System for Automatic Discovery of Pareto-optimal Meta-solvers for PDEs",
+      "url": "https://arxiv.org/abs/2611.31611",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "E2SIM: Long-Horizon Simulation of Everyday Human Behavior with Evolving States",
+      "url": "https://arxiv.org/abs/2611.31641",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "TACT-Bench: Testing Adaptive Conversational Threats against Tool-Use Agents",
+      "url": "https://arxiv.org/abs/2611.31756",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "AGL-SKILL: Coding Harnesses as Agentic Optimizers",
+      "url": "https://arxiv.org/abs/2611.31794",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "A Generative AI Agent to Emulate Interactive Human-driven Vehicles for Automated Driving Testing in Urban Areas",
+      "url": "https://arxiv.org/abs/2611.31797",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Modeling Event-Conditioned Emotional Expression Response with LLM Agents in a Synthetic Social Simulation",
+      "url": "https://arxiv.org/abs/2611.31851",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "RepoEviAgent: Scalable Synthesis of Evidence-Grounded Repository-Level Question Answering Tasks",
+      "url": "https://arxiv.org/abs/2611.31873",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "CAPE: Coordinating Calibration and Search for Tool-Use Policies",
+      "url": "https://arxiv.org/abs/2611.31938",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Coding4Games: Can Modern Coding Agents Play Modern Video Games?",
+      "url": "https://arxiv.org/abs/2611.31974",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Discovering Bandwidth-Efficient Prefetchers to Shrink the Cache Hierarchy",
+      "url": "https://arxiv.org/abs/2611.31983",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Marketing-Bench: Evaluating Frontier Models and Agents on Real-World Marketing Capabilities",
+      "url": "https://arxiv.org/abs/2611.32012",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "From Rule-based to Agentic: LLM Agent based Real-time Control of Urban Drainage Systems for Flooding and Sewer Overflow Mitigation",
+      "url": "https://arxiv.org/abs/2611.32046",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "ExpGuard: Guarding Long-Horizon LLM Agents against Corrupted Experience",
+      "url": "https://arxiv.org/abs/2611.32085",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "CoverMem: Coverage-Constrained Visual Memory for Budgeted Embodied Question Answering",
+      "url": "https://arxiv.org/abs/2611.32119",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "XMind: Thinking Twice via Cross-Memory Reasoning for LLM-Based Autonomous Driving",
+      "url": "https://arxiv.org/abs/2611.32209",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "PoseVLN: Learning Geometric State Evolution for Vision-Language Navigation",
+      "url": "https://arxiv.org/abs/2611.32218",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Refining and Aligning Clinical Reasoning with Health Guidelines via Formal Constraints",
+      "url": "https://arxiv.org/abs/2611.32247",
+      "feed_date": "2026-11-25T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+      "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+      "feed_date": "2026-11-25T00:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "GPT-6 models demonstrate intrinsic protein-design capabilities",
+      "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
+      "feed_date": "2026-11-24T13:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "Searching for distant planets with Astra",
+      "url": "https://openai.com/index/searching-for-distant-planets-with-astra",
+      "feed_date": "2026-11-24T11:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "How iFood scales coding agents across 15,000 repositories",
+      "url": "https://openai.com/business/customer-stories/ifood",
+      "feed_date": "2026-11-24T00:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "Clay helps sales teams win with Codex and ChatGPT",
+      "url": "https://openai.com/business/customer-stories/clay-plugins-openai",
+      "feed_date": "2026-11-24T00:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "Richpanel helps companies automate 50% of support in 30 days",
+      "url": "https://openai.com/business/customer-stories/richpanel-ai-customer-support",
+      "feed_date": "2026-11-23T08:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    }
+  ]
+}
