@@ -1,0 +1,36 @@
+{
+  "digest_date": "2026-11-26",
+  "digest_markdown": "# AI Agentic Deep Research Digest · 26/11/2026\n\nBản lưu bổ sung của lượt sáng 26/11. Hai công bố ngày 25/11 đã đối chiếu với nguồn gốc. Các mục research radar chưa xác minh đủ không được ghi ledger.\n\n1. **Anthropic chuyển Messages API sang Rust.** Chạy inference một lần rồi phát lại đầu ra cho nhánh Rust để so khác biệt API trên cùng dữ liệu. Anthropic báo CPU phía API thấp hơn khoảng 70% mỗi request và median time to first token thấp hơn khoảng 20% trên traffic quan sát. Đây không phải benchmark tốc độ model. [Phân tích](../articles/anthropic-messages-api-rust-migration-nov2026/initial.md) · [Nguồn](https://www.anthropic.com/research/migrating-api-to-rust)\n2. **Copilot Code Review đổi mặc định phân bổ chi phí.** Từ 30/12/2026, với Copilot Business/Enterprise chưa đặt policy cho thành viên có license, GitHub mặc định tính phí cho tổ chức sở hữu repo, có ngoại lệ. Cấu hình tường minh hiện có giữ nguyên. [Phân tích](../articles/github-copilot-code-review-org-billing-default-nov2026/initial.md) · [Nguồn](https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization/)",
+  "items": [
+    {
+      "record": {
+        "story_id": "anthropic-messages-api-rust-migration-nov2026",
+        "update_id": "initial",
+        "title": "Anthropic chuyển Messages API sang Rust và kiểm tra tương đương bằng shadow traffic",
+        "event_date": "2026-11-25",
+        "category": "enterprise",
+        "canonical_url": "https://www.anthropic.com/research/migrating-api-to-rust",
+        "source_urls": [
+          "https://www.anthropic.com/research/migrating-api-to-rust"
+        ],
+        "change_summary": "Migration của lớp API: inference chạy một lần, đầu ra phát lại để so Python/Rust; Anthropic báo CPU API/request giảm khoảng 70% và median TTFT khoảng 20%."
+      },
+      "article_markdown": "# Anthropic chuyển Messages API sang Rust\n\n- story_id: anthropic-messages-api-rust-migration-nov2026\n- update_id: initial\n- Ngày công bố: 2026-11-25. Digest: 2026-11-26. Bản phân tích chuẩn bị: 2026-11-26T00:51:50.317Z.\n\n## Có gì mới?\nAnthropic mô tả cách chuyển lớp phục vụ Messages API từ Python sang Rust mà không phải dừng dịch vụ. Khó khăn không chỉ là tốc độ: cùng một payload có thể tạo hai câu trả lời hợp lệ nhưng khác nhau nếu gọi model hai lần, khiến kiểm thử song song dễ gắn nhầm lỗi cho lớp API.\n\n## Chi tiết kỹ thuật\nTrong phép so sánh trên traffic thật, model chỉ chạy một lần. Dịch vụ Rust nhận lại cùng đầu ra, để hai hệ thống có thể so kết quả xử lý quanh bước inference. Tách phần sinh token khỏi phần điều phối giúp chẩn đoán sai khác tốt hơn khi migrate tầng request/response mà không phải coi mỗi khác biệt văn bản là lỗi.\n\n## Điều đáng thử với hệ thống agent\nVới gateway phục vụ nhiều model, có thể áp dụng cùng nguyên tắc để test routing và streaming: giữ đầu vào, sự kiện đầu ra và tình huống lỗi cố định, rồi so phần mà bản triển khai mới thực sự chịu trách nhiệm. Khi đánh giá lợi ích, đo CPU lớp API và độ trễ bắt đầu stream riêng với throughput của inference.\n\n## Giới hạn\nAnthropic báo khoảng 70% ít CPU phía API hơn mỗi request và time to first token trung vị giảm khoảng 20% trong triển khai của họ. Đây là quan sát do hãng báo cáo, không phải kết quả tái lập độc lập hay ước lượng cho hệ thống khác. Ngày trên là ngày công bố bài kỹ thuật, không khẳng định là ngày hoàn tất migration.\n\n[Nguồn gốc: Anthropic Engineering](https://www.anthropic.com/research/migrating-api-to-rust)"
+    },
+    {
+      "record": {
+        "story_id": "github-copilot-code-review-org-billing-default-nov2026",
+        "update_id": "initial",
+        "title": "GitHub Copilot Code Review đổi billing mặc định về tổ chức khi chưa đặt policy",
+        "event_date": "2026-11-25",
+        "category": "policy",
+        "canonical_url": "https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization/",
+        "source_urls": [
+          "https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization/"
+        ],
+        "change_summary": "Từ 30/12/2026, policy chưa đặt cho thành viên có license của Business/Enterprise mặc định Organization; cấu hình tường minh và policy cho unlicensed không đổi, có ngoại lệ."
+      },
+      "article_markdown": "# Copilot Code Review đổi mặc định phân bổ chi phí\n\n- story_id: github-copilot-code-review-org-billing-default-nov2026\n- update_id: initial\n- Ngày công bố: 2026-11-25. Digest: 2026-11-26. Bản phân tích chuẩn bị: 2026-11-26T00:51:50.317Z.\n\n## Có gì mới?\nGitHub thông báo từ 30/12/2026, nếu policy phân bổ chi phí Copilot Code Review cho thành viên có license của Copilot Business/Enterprise chưa được đặt, mặc định sẽ chuyển sang tổ chức sở hữu repository. Người quản trị đã chọn Member hoặc Organization không bị ghi đè. Chính sách riêng cho người không có license không thay đổi.\n\n## Ngoại lệ\nGitHub liệt kê ba trường hợp đặt về Member thay vì Organization: chưa bật chi tiêu AI Credits trả phí, có billing lock, hoặc không có billable customer. Mặc định mới vì vậy không đồng nghĩa mọi lượt review đều chuyển vào hóa đơn tổ chức.\n\n## Việc kỹ sư nên kiểm\nVới repo có nhiều review tự động, nên xác định chủ repo, policy có đang bỏ trống hay không và ai cần nhận cảnh báo ngân sách. Nếu dashboard nội bộ gán chi phí cố định theo người gọi, nên kiểm lại sau ngày áp dụng thay vì suy ra phân bổ từ số lượt review.\n\n## Giới hạn\nĐây là thông báo thay đổi bên chịu phí, không có bằng chứng bản tin này thay đổi đơn giá riêng của mỗi lượt review. Cần xem cài đặt và dữ liệu thanh toán của tổ chức để biết tác động thực tế.\n\n[Nguồn gốc: GitHub Changelog](https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization/)"
+    }
+  ]
+}
