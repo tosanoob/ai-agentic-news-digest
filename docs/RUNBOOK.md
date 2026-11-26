@@ -1,17 +1,11 @@
 # Scheduled digest runbook
 
-This repository is the persistent **archive and de-duplication reference**, not a second notification system.
+See [GitHub Actions pipeline](ACTIONS.md) for the editorial bundle contract and publication controls.
 
-1. At task start read `README.md`, `config/sources.yaml`, `data/stories.jsonl`, and the latest available digest archives. If missing/unreadable, state **best-effort only**; do not claim a persistent lookup.
-2. Scan the period since the previous successful dated archive; include weekends after Friday. If no archive exists, scan the last 72 hours, optionally look back further for significant first-run stories.
-3. Verify the date of **the underlying event** and first-party URL. Use secondary coverage only to contextualize.
-4. Cluster cross-posts as ONE story using stable kebab-case `story_id`. Evaluate duplicates by `(story_id,update_id)`; use URL and headline similarity as secondary signals; preserve genuinely new material update under the old story ID.
-5. Write 5–10 high-signal stories if available (fewer is fine), sections: Breaking; Models/Agents; Papers & Benchmarks; GitHub Releases; What to Watch. Each entry includes date, source link, technical significance and evidence caveats.
-6. Before publishing, archive dated digest `digests/YYYY-MM-DD.md` and update `data/stories.jsonl` **without losing existing records**. Prefer an atomic Git commit containing both changes. If GitHub write fails, continue with a digest marked **ledger write failed**, and do not assert new entries were saved.
-7. A ledger row means *archived/included*, never `sent`. Do not claim a ChatGPT notification was delivered, since this repository cannot validate delivery.
-8. On retries, if a digest archive already exists for the day, compare and only issue materially new BREAKING/UPDATE content; otherwise prevent re-publication.
-9. Never commit secrets or automatically scrape full copyrighted articles.
-
-## Integration limitation
-
-Interactive connector write permission **does not establish** unattended GitHub permissions inside ChatGPT scheduled tasks. This needs a verified task execution. There is no GitHub Actions news delivery job in this repository; CI only validates the ledger.
+1. GitHub Actions collects candidate links daily near 06:37 Vietnam time. Candidates are discovery only; source and event verification remain editorial.
+2. At the start of the ChatGPT digest, read the source config, ledger, latest archives, and today's editorial/ archive file status. Use the latest successful archive to determine gaps. No ledger access means no verified deduplication and no handoff write.
+3. Verify first-party sources and underlying dates; cluster cross-posts by story ID and introduce a new update ID only for material events. Start with the highest-signal items and write their standalone analysis first.
+4. Hand off one reviewed editorial bundle via a single GitHub connector write. Do not write article, archive or ledger paths from the task. If the bundle already exists, check status; never overwrite it as a retry.
+5. Actions validates and pushes articles, digest and ledger together, then verifies the remote. Only read-back evidence justifies reporting SYNCED. On failure, distinguish missing research, handoff error, pending workflow and publication failure.
+6. ChatGPT remains the notification channel. An archived ledger row does not prove notification delivery.
+7. Never commit credentials, personal data, copied articles or fictional rows. No daily.dev or paid API is in this workflow.
