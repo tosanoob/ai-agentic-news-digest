@@ -4,7 +4,12 @@ The code-based pipeline separates discovery, editorial work, and persistence. No
 
 ## Collect
 
-`Agentic Digest` collects at 06:37 Asia/Ho_Chi_Minh (23:37 UTC the previous date). A manual `collect` run is also available. It checks the current ledger, fetches fixed feeds, reports counts per source, and uploads a short-lived `digest-candidates` artifact with title, feed date, and source link. This is discovery, not verified news. Lobsters is secondary discovery only. A missing or failed feed is logged, not treated as no news; if all primary feeds fail, collection fails.
+`Agentic Digest` collects at 06:37 Asia/Ho_Chi_Minh (23:37 UTC the previous date). A manual collect on `main` is also available. The 3-day upload is transport/fallback only. A separate trusted job commits metadata to the [candidate-log branch](https://github.com/tosanoob/ai-agentic-news-digest/tree/candidate-log) and reports `CANDIDATES_SAVED` only after Git remote read-back.
+
+- Lookup: on `candidate-log`, read `YYYY-MM-DD/latest.json` for today's Vietnam date, then read the relative paths in `manifest` and `raw`. Each scan is kept under `YYYY-MM-DD/<Actions run ID>-<attempt>/`; a retry stores a separate scan and doesn't overwrite prior ones. Use a full workflow rerun or a new manual collect after a failed upload/archive.
+- `digest-candidates.json` is a compact editorial starting point. Its source diagnostics report returned, dated, out-of-window, keyword-matched, logged, and shortlisted counts; flag counts can overlap. A partial scan means at least one feed failed even though some primary coverage remains. A brief title or feed date is not original-source verification.
+- `raw-candidates.jsonl` records every returned entry in the configured time window, plus undated entries. It keeps public link, source, title and feed timestamp before editorial review, including keyword misses, exact URL duplicates, links already in the ledger and entries beyond the per-source shortlist cap. Invalid or credential-bearing URLs are omitted from the row; out-of-window entries are counted, not logged individually. Scope is the returned feed snapshots, not all news on the web. Caps (20 per feed, 30 for arXiv) apply only to the shortlist after filtering known ledger links and exact URL duplicates, never to the raw log.
+- Source errors are visible, not counted as no news; Lobsters is secondary discovery only. If all primary feeds or the ledger fail, the scan is marked degraded and retained for diagnosis, but independently research the news. Missing, stale or unusable scan pointers are not evidence of zero news. Continue searching beyond these feeds; the shortlist can miss worthwhile stories.
 
 ## Editorial handoff
 
@@ -32,10 +37,10 @@ Use one `editorial/YYYY-MM-DD.json` file per push on `main`, or run the workflow
 }
 ```
 
-The script assigns `recorded_at` and `digest_date` on ledger entries. For a genuinely completed scan with no qualifying item, explicitly use `zero_verified_items: true` with an empty list and a Markdown explanation. Do not use this for failed sources or incomplete research. Both the artifact and the repository are public: never include credentials, private data, or copied articles.
+The script assigns `recorded_at` and `digest_date` on ledger entries. For a genuinely completed scan with no qualifying item, explicitly use `zero_verified_items: true` with an empty list and a Markdown explanation. Do not use this for failed sources or incomplete research. Both the artifacts and candidate branch are public: never include credentials, private data, or copied articles.
 
 ## Safety and verification
 
-`collect` and `dry-run` have read-only GitHub permissions. Only the trusted main-branch writer may use `contents: write`; it runs tests before writing, validates linked files, and pushes one ordinary non-force commit. It refuses conflicting prior digests or ledger records. A repeated identical bundle adds no duplicate. `SYNCED` requires verifying the commit is on remote main. The writer runs the validator in the job because GitHub generally does not trigger another push workflow for a commit made with its built-in token.
+`collect` and `dry-run` have read-only GitHub permissions. A separate main-branch-only archival job validates the candidate artifact and may write only the candidate-log branch; it does not touch digest, articles or ledger. The trusted publisher runs tests before writing, validates linked files, and pushes one ordinary non-force commit to main. It refuses conflicting prior digests or ledger records. A repeated identical bundle adds no duplicate. `SYNCED` requires verifying the commit is on remote main. The writer runs the validator in the job because GitHub generally does not trigger another push workflow for a commit made with its built-in token.
 
 Do not switch ChatGPT to read-only notification until both handoff and a hosted write with read-back have been verified. A failed publication is not a sent or archived digest. Daily.dev and a dedicated model/search API are intentionally not configured.
