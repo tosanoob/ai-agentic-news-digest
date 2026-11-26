@@ -1,0 +1,44 @@
+name: Digest source preflight
+on:
+  push:
+    branches: [miku/digest-actions]
+    paths: ['.github/workflows/digest-preflight.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - run: python3 scripts/ledger.py validate
+      - name: Fetch public sources (read only)
+        run: |
+          python3 - <<'PY'
+          import concurrent.futures, urllib.request, xml.etree.ElementTree as ET
+          sources = {
+              "GitHub Changelog": "https://github.blog/changelog/feed/",
+              "OpenAI": "https://openai.com/news/rss.xml",
+              "arXiv cs.AI": "https://rss.arxiv.org/rss/cs.AI",
+              "Hugging Face": "https://huggingface.co/blog/feed.xml",
+              "Lobsters AI": "https://lobste.rs/t/ai.rss",
+          }
+          def check(pair):
+              name, url = pair
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "DigestPreflight/1.0"}), timeout=15) as response:
+                      root = ET.fromstring(response.read(2_000_000))
+                  assert root.tag.split("}")[-1] in {"rss", "feed", "RDF"}
+                  return name, len(root.findall(".//item")) + len(root.findall(".//{http://www.w3.org/2005/Atom}entry")), None
+              except Exception as exc:
+                  return name, 0, type(exc).__name__ + " " + str(exc)
+          with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+              results = list(pool.map(check, sources.items()))
+          for name, count, error in results:
+              print(f"{name}: {error or str(count) + ' items'}")
+          if not any(count and not error and name != "Lobsters AI" for name, count, error in results):
+              raise SystemExit("No nonempty primary feed reached")
+          PY
