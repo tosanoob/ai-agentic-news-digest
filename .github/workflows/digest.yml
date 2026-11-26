@@ -4,7 +4,7 @@ on:
     - cron: '37 23 * * *' # 06:37 Asia/Ho_Chi_Minh; collection only.
   push:
     branches: [main, miku/digest-actions-collect-qa]
-    paths: ['editorial/*.json', '.github/workflows/digest.yml']
+    paths: ['editorial/*.json', '.github/workflows/digest.yml', 'scripts/digest_actions.py']
   pull_request:
     paths:
       - '.github/workflows/digest.yml'

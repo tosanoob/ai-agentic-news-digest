@@ -55,12 +55,14 @@ def public_url(raw):
     except ValueError:
         return None
 
+class FeedTree(ET.TreeBuilder):
+    def doctype(self, name, public_id, system_id):
+        raise ValueError("feed XML contains a document type declaration")
+
 def inspect_feed(body, name, primary, cutoff, now):
-    # Bound XML input at the transport boundary and never expand declared entities.
-    xml_probe = body.replace(b"\0", b"").upper()
-    if b"<!DOCTYPE" in xml_probe or b"<!ENTITY" in xml_probe:
-        raise ValueError("feed XML contains a declaration")
-    root = ET.fromstring(body)
+    # Reject actual XML doctypes before entity expansion without rejecting HTML
+    # doctypes inside CDATA (e.g. WordPress content:encoded).
+    root = ET.fromstring(body, parser=ET.XMLParser(target=FeedTree()))
     if root.tag not in ("rss", ATOM+"feed"):
         raise ValueError("expected RSS or Atom")
     nodes = root.findall("./channel/item") if root.tag == "rss" else root.findall(ATOM+"entry")

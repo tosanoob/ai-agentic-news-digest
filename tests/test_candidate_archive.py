@@ -95,3 +95,13 @@ class CandidateArchiveTests(unittest.TestCase):
     def test_document_type_is_rejected(self):
         with self.assertRaisesRegex(ValueError,"declaration"):
             digest.inspect_feed(b"<!DOCTYPE rss><rss/>","feed",True,self.now,self.now)
+
+    def test_html_doctype_inside_feed_cdata_is_not_xml_declaration(self):
+        payload = b'<rss><channel><item><title>Agent news</title><description><![CDATA[<!DOCTYPE html>]]></description></item></channel></rss>'
+        stats, metadata = digest.inspect_feed(payload,"feed",True,self.now,self.now)
+        self.assertEqual((stats["total"], metadata[0]["title"]), (1, "Agent news"))
+
+    def test_utf16_internal_entity_declaration_rejected(self):
+        payload = ('<!DOCTYPE rss [<!ENTITY foo "test">]><rss>&foo;</rss>').encode("utf-16")
+        with self.assertRaisesRegex(ValueError,"declaration"):
+            digest.inspect_feed(payload,"feed",True,self.now,self.now)
