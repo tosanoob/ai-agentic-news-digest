@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "as_of": "2026-11-27T05:18:33.418445+00:00",
+  "scan_date_ict": "2026-11-27",
+  "status": "ok",
+  "raw_rows": 412,
+  "candidate_count": 38,
+  "run_id": 45945023797,
+  "attempt": 1,
+  "manifest": "2026-11-27/45945023797-1/digest-candidates.json",
+  "raw": "2026-11-27/45945023797-1/raw-candidates.jsonl",
+  "raw_sha256": "ee88ab7e624b70dbf779f6b832d471456b20a2caf2e3e3993e228379334a6a95",
+  "manifest_sha256": "4006f4621637d86fc95932e58d64279d431780ba4657641b533db75f5a13f1be"
+}

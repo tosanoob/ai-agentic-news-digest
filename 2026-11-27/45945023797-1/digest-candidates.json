@@ -1,0 +1,436 @@
+{
+  "schema_version": 2,
+  "as_of": "2026-11-27T05:18:33.418445+00:00",
+  "window_start": "2026-11-24T05:18:33.418445+00:00",
+  "scan_date_ict": "2026-11-27",
+  "window_days": 3,
+  "status": "ok",
+  "ledger_ok": true,
+  "sources": [
+    {
+      "source": "github-changelog",
+      "feed_url": "https://github.blog/changelog/feed/",
+      "primary_feed": true,
+      "total": 10,
+      "dated": 10,
+      "outside_window": 8,
+      "matched": 1,
+      "raw_rows": 2,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {
+        "seen_in_ledger": 1,
+        "topic_filter": 1
+      },
+      "shortlisted": 0
+    },
+    {
+      "source": "openai",
+      "feed_url": "https://openai.com/news/rss.xml",
+      "primary_feed": true,
+      "total": 1430,
+      "dated": 1430,
+      "outside_window": 1428,
+      "matched": 2,
+      "raw_rows": 2,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {},
+      "shortlisted": 2
+    },
+    {
+      "source": "arxiv-ai",
+      "feed_url": "https://rss.arxiv.org/rss/cs.AI",
+      "primary_feed": true,
+      "total": 398,
+      "dated": 398,
+      "outside_window": 0,
+      "matched": 121,
+      "raw_rows": 398,
+      "ok": true,
+      "shortlist_cap": 30,
+      "flags": {
+        "arxiv_topic_filter": 277,
+        "topic_filter": 35,
+        "source_shortlist_cap": 91
+      },
+      "shortlisted": 30
+    },
+    {
+      "source": "huggingface",
+      "feed_url": "https://huggingface.co/blog/feed.xml",
+      "primary_feed": true,
+      "total": 918,
+      "dated": 918,
+      "outside_window": 912,
+      "matched": 6,
+      "raw_rows": 6,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {},
+      "shortlisted": 6
+    },
+    {
+      "source": "lobsters-ai",
+      "feed_url": "https://lobste.rs/t/ai.rss",
+      "primary_feed": false,
+      "total": 25,
+      "dated": 25,
+      "outside_window": 21,
+      "matched": 0,
+      "raw_rows": 4,
+      "ok": true,
+      "shortlist_cap": 20,
+      "flags": {
+        "topic_filter": 4
+      },
+      "shortlisted": 0
+    }
+  ],
+  "raw_rows": 412,
+  "candidate_count": 38,
+  "candidates": [
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "AutoformBench: A Lean Formalization Benchmark for Advanced Mathematics",
+      "url": "https://arxiv.org/abs/2611.33165",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Confidence scores for gated automation of large language models",
+      "url": "https://arxiv.org/abs/2611.33394",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Partial Routing: Trace-Tuned Delegation for Resource-Efficient Agentic Workflows",
+      "url": "https://arxiv.org/abs/2611.33402",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Dynamic Reasoning in Next-Gen Detection and Response: An Empirical Study of LLM Triage, Reinforcement Tuning, and Adversarial Evasion",
+      "url": "https://arxiv.org/abs/2611.33470",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Learning to Reason in Real-Time",
+      "url": "https://arxiv.org/abs/2611.33513",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "FIG-MAC: A Fine-grained Inspiration Graph Empowered Multi-Agent Collaboration for Automated Scientific Hypothesis Generation",
+      "url": "https://arxiv.org/abs/2611.33563",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Controllable CAD Generation and Interactive Editing of Fluid Rotors",
+      "url": "https://arxiv.org/abs/2611.33617",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "How Much Effort Does an AI Code Reviewer Need? Evidence from Claude 5.5 Models on Plausible-but-Wrong Patches",
+      "url": "https://arxiv.org/abs/2611.33639",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "SlicePlanner: Logic-Guided Agentic AI for Online QoS-Aware Network Slicing in Open RAN",
+      "url": "https://arxiv.org/abs/2611.33664",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Interactive Proofs as a Unified Framework for Evaluating and Leveraging Verifiable Proof Generation by LLM Agents",
+      "url": "https://arxiv.org/abs/2611.33676",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "EVA: Evidence-seeking Visual Agent for Hallucination-Resistant Multimodal Reasoning",
+      "url": "https://arxiv.org/abs/2611.33706",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "P-FedSkill: A Personalized Federated Skill Learning Framework under Task Heterogeneity",
+      "url": "https://arxiv.org/abs/2611.33707",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "PowerFix: Physics-Guided Iterative Repair for LLM-Assisted Power Converter Design",
+      "url": "https://arxiv.org/abs/2611.33712",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Asset4D-Bench: Benchmarking Coding Agents for Editable 3D and 4D Reconstruction",
+      "url": "https://arxiv.org/abs/2611.33728",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "JOVE ICE: Intent Guided Cloud Edge Device Collaboration for AI Glasses",
+      "url": "https://arxiv.org/abs/2611.33735",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "TransHarness: From Benchmark Overfitting to Transferable Harness Evolution",
+      "url": "https://arxiv.org/abs/2611.33757",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "ExtractBench Pro: The Long Tail of Document Extraction",
+      "url": "https://arxiv.org/abs/2611.33791",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "RadOncGym: An Agent-Based Framework for Radiotherapy Dose-Mimicking Optimization",
+      "url": "https://arxiv.org/abs/2611.33821",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "MetaDecomp: Adaptive Task Decomposition via Meta-Learned Procedural Memory",
+      "url": "https://arxiv.org/abs/2611.33822",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Can Its Own Misses Teach an MLLM to Find Small Brain Metastases?",
+      "url": "https://arxiv.org/abs/2611.33836",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "FORK: Co-Evolving Safe Disclosure and Decision Skills Against Attackers Who Read Every Refusal",
+      "url": "https://arxiv.org/abs/2611.33879",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "EATS: Scaling Tool-Use Experience for Medical Reasoning Agents",
+      "url": "https://arxiv.org/abs/2611.33897",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "EGSE: Evidence-Grounded Skill Evolution for Medical Reasoning Agents",
+      "url": "https://arxiv.org/abs/2611.33909",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "What Does Skill Lift Actually Measure? A Source-Code-Level Audit and Noise-Aware Reanalysis of SkillsBench",
+      "url": "https://arxiv.org/abs/2611.33943",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "PatternMiner: Automated Mathematical Discovery Through LLM-Guided Training and Interpretation of Small Models",
+      "url": "https://arxiv.org/abs/2611.33966",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Few-Shot Adaptation of Vision-Language Models via Agentic Model Editing",
+      "url": "https://arxiv.org/abs/2611.34036",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Budget, Readout or Reasoning? Where Small Reasoning Models Lose Value in Auction Bidding",
+      "url": "https://arxiv.org/abs/2611.34068",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Not Every Input Needs Everything: Unifying Expert Gating, Model Cascades, and Agent Orchestration",
+      "url": "https://arxiv.org/abs/2611.34112",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "Letting Models Manage Their Own Context: Where We Stand",
+      "url": "https://arxiv.org/abs/2611.34147",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "arxiv-ai",
+      "primary_feed": true,
+      "title": "PROVE: Mitigating Long-Horizon LLM Collusion with Reinforcement Learning from Verified Evidence",
+      "url": "https://arxiv.org/abs/2611.34215",
+      "feed_date": "2026-11-27T05:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Introducing the llama.cpp benchmark dashboard for AMD Ryzen and Radeon",
+      "url": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench",
+      "feed_date": "2026-11-26T11:37:17+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+      "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+      "feed_date": "2026-11-26T05:05:36+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Swarms, Flocks, Gangs: How to build, train, and evaluate multi-agent systems",
+      "url": "https://huggingface.co/blog/training-swarms",
+      "feed_date": "2026-11-26T00:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Where scientists draw the line on AI agents",
+      "url": "https://huggingface.co/blog/allenai/where-scientists-draw-the-line-on-ai-agents",
+      "feed_date": "2026-11-25T18:52:55+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "An Indic Voice Agent with CUGA",
+      "url": "https://huggingface.co/blog/ibm-research/an-indic-voice-agent-with-cuga",
+      "feed_date": "2026-11-25T10:22:09+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "huggingface",
+      "primary_feed": true,
+      "title": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+      "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+      "feed_date": "2026-11-25T00:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "GPT-6 models demonstrate intrinsic protein-design capabilities",
+      "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
+      "feed_date": "2026-11-24T13:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    },
+    {
+      "source": "openai",
+      "primary_feed": true,
+      "title": "Searching for distant planets with Astra",
+      "url": "https://openai.com/index/searching-for-distant-planets-with-astra",
+      "feed_date": "2026-11-24T11:00:00+00:00",
+      "flags": [],
+      "shortlisted": true
+    }
+  ]
+}
