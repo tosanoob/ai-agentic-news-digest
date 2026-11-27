@@ -1,0 +1,69 @@
+{
+  "digest_date": "2026-11-27",
+  "digest_markdown": "# AI Agentic Deep Research Digest · 27/11/2026\n\nBản bù sau lượt sáng chưa hoàn tất. Collector theo lịch chạy lúc khoảng 12:18 giờ Việt Nam thay vì 06:37. Hai preprint dưới đây nghiên cứu các kiểu phân công khác nhau; không gộp kết quả thành kết luận chung cho mọi agent.\n\n1. **Partial Routing: giao từng việc con cho model rẻ hơn thay vì route cả task.** Preprint báo cáo ViBench 70,2 → 78,5 với chi phí thấp hơn 19%; Terminal-Bench 54,3% → 60,9% với chi phí gần như ngang nhau. [Phân tích](../articles/partial-routing-trace-tuned-delegation-nov2026/initial.md) · [Nguồn](https://arxiv.org/abs/2611.33402)\n2. **Parallel subagents khi dựng repo: thêm 1–5 điểm phần trăm, chi phí tới 3,8 lần.** Trên các task lấy ngẫu nhiên từ hai benchmark dựng repo, parallel subagents tăng tỷ lệ hidden test pass khoảng 1–5 điểm phần trăm và không thắng single-agent khi so cùng chi phí. [Phân tích](../articles/parallel-subagents-coding-repository-construction-nov2026/initial.md) · [Nguồn](https://arxiv.org/abs/2611.33893)\n3. **Google ADK Python 2.15: đo agent đúng ít nhất một lần và đúng ở mọi lần chạy.** Bản 2.15.0 thêm pass@k, pass^k và chấm từng tham số tool; bản vá 2.15.1 phát hành ngày 25/11 xử lý lưu kết quả stream A2A và tương thích sampling với Anthropic SDK. [Phân tích](../articles/google-adk-python-v2-15-eval-nov2026/initial.md) · [Nguồn](https://github.com/google/adk-python/releases/tag/v2.15.1)\n4. **OpenAI Agents SDK 0.26.0 đổi thứ tự metadata MCP và kiểm Realtime cuối lượt.** Metadata truyền trực tiếp từng lần gọi MCP được ưu tiên hơn resolver và mặc định discovery; Realtime kiểm phần output còn lại khi kết thúc lượt. [Phân tích](../articles/openai-agents-python-v0-26-0-nov2026/initial.md) · [Nguồn](https://github.com/openai/openai-agents-python/releases/tag/v0.26.0)\n\n**Coverage:** 5/5 feed · 412 dòng thô · 38 qua shortlist · 4 bài được chọn, gồm nguồn web bổ sung. arXiv có 398 dòng và chạm trần shortlist ở 30; 91 mục đủ điều kiện bị giữ ngoài shortlist do trần nguồn. [Log trước biên tập](https://github.com/tosanoob/ai-agentic-news-digest/blob/candidate-log/2026-11-27/latest.json).\n",
+  "items": [
+    {
+      "record": {
+        "story_id": "partial-routing-trace-tuned-delegation-nov2026",
+        "update_id": "initial",
+        "title": "Partial Routing: giao từng việc con cho model rẻ hơn thay vì route cả task",
+        "event_date": "2026-11-24",
+        "category": "paper",
+        "canonical_url": "https://arxiv.org/abs/2611.33402",
+        "source_urls": [
+          "https://arxiv.org/abs/2611.33402",
+          "https://arxiv.org/html/2611.33402v1"
+        ],
+        "change_summary": "Preprint báo cáo ViBench 70,2 → 78,5 với chi phí thấp hơn 19%; Terminal-Bench 54,3% → 60,9% với chi phí gần như ngang nhau."
+      },
+      "article_markdown": "# Partial Routing: giao từng việc con cho model rẻ hơn thay vì route cả task\n\n- story_id: partial-routing-trace-tuned-delegation-nov2026\n- update_id: initial\n- Ngày nguồn (UTC): 2026-11-24. Digest: 2026-11-27. Biên tập: 2026-11-27T06:31:54.509Z.\n\n## Có gì mới?\nPreprint báo cáo ViBench 70,2 → 78,5 với chi phí thấp hơn 19%; Terminal-Bench 54,3% → 60,9% với chi phí gần như ngang nhau.\n\n## Cơ chế\nNhóm tác giả đối chiếu trace của lead và worker để tìm các bước lặp lại mà worker làm đủ tốt với chi phí thấp. Lead dùng dữ liệu đó để tự chọn phần việc giao đi khi chạy, không cần huấn luyện lại model. Baseline chỉ cung cấp bản chia việc cũng giúp giảm chi phí trên cả hai bộ test; trên Terminal-Bench nó đạt 58,7%, so với 54,3% của lead chạy một mình.\n\n## Việc đáng thử\nThử ba nhánh trên cùng bộ fixture: lead chạy như cũ; lead nhận bản chia việc nhưng không delegate; và cùng bản chia việc nhưng delegating tác vụ trích xuất bằng chứng. So chi phí, lỗi trích dẫn và số mâu thuẫn được giữ lại, không chỉ số token.\n\n## Giới hạn\nĐây là preprint với 10 ứng dụng ViBench và 23 tác vụ Terminal-Bench holdout trong kết quả chính. ViBench là điểm trên thang 100, không phải pass rate. Kết quả phụ thuộc cặp model và harness; không suy rộng mức tiết kiệm 19% sang pipeline khác. arXiv ghi ngày nộp 24/11 UTC; feed ghi 27/11.\n\n[Nguồn gốc 1](https://arxiv.org/abs/2611.33402) · [Nguồn gốc 2](https://arxiv.org/html/2611.33402v1)\n"
+    },
+    {
+      "record": {
+        "story_id": "parallel-subagents-coding-repository-construction-nov2026",
+        "update_id": "initial",
+        "title": "Parallel subagents khi dựng repo: thêm 1–5 điểm phần trăm, chi phí tới 3,8 lần",
+        "event_date": "2026-11-25",
+        "category": "benchmark",
+        "canonical_url": "https://arxiv.org/abs/2611.33893",
+        "source_urls": [
+          "https://arxiv.org/abs/2611.33893",
+          "https://arxiv.org/html/2611.33893v1"
+        ],
+        "change_summary": "Trên các task lấy ngẫu nhiên từ hai benchmark dựng repo, parallel subagents tăng tỷ lệ hidden test pass khoảng 1–5 điểm phần trăm và không thắng single-agent khi so cùng chi phí."
+      },
+      "article_markdown": "# Parallel subagents khi dựng repo: thêm 1–5 điểm phần trăm, chi phí tới 3,8 lần\n\n- story_id: parallel-subagents-coding-repository-construction-nov2026\n- update_id: initial\n- Ngày nguồn (UTC): 2026-11-25. Digest: 2026-11-27. Biên tập: 2026-11-27T06:31:54.509Z.\n\n## Có gì mới?\nTrên các task lấy ngẫu nhiên từ hai benchmark dựng repo, parallel subagents tăng tỷ lệ hidden test pass khoảng 1–5 điểm phần trăm và không thắng single-agent khi so cùng chi phí.\n\n## Cơ chế\nNghiên cứu so một agent và lead có subagent trên NL2Repo và ProgramBench. Một phần chênh lệch đến từ khả năng kiểm tra lại: trong một số task khó của ProgramBench, yêu cầu single agent thăm dò chương trình tham chiếu thu hồi phần lớn lợi ích với chi phí thấp hơn. Các tác giả cũng tách hiệu ứng context mới và tính mô-đun.\n\n## Việc đáng thử\nBắt đầu bằng một agent có tiêu chí kiểm thử rõ và đo theo ngân sách ngang nhau. Chỉ bật chạy song song nếu có phần việc độc lập hoặc cần thêm một lượt kiểm tra mà lead thường bỏ qua.\n\n## Giới hạn\nĐây là preprint về dựng repository từ đặc tả, không phải toàn bộ tác vụ lập trình. Kết luận theo điều kiện thử của hai benchmark, không loại trừ lợi ích ở repo thật. Bài này có trong raw log nhưng không có trong shortlist vì chạm trần arXiv.\n\n[Nguồn gốc 1](https://arxiv.org/abs/2611.33893) · [Nguồn gốc 2](https://arxiv.org/html/2611.33893v1)\n"
+    },
+    {
+      "record": {
+        "story_id": "google-adk-python-v2-15-eval-nov2026",
+        "update_id": "initial",
+        "title": "Google ADK Python 2.15: đo agent đúng ít nhất một lần và đúng ở mọi lần chạy",
+        "event_date": "2026-11-25",
+        "category": "agent_framework",
+        "canonical_url": "https://github.com/google/adk-python/releases/tag/v2.15.1",
+        "source_urls": [
+          "https://github.com/google/adk-python/releases/tag/v2.15.1",
+          "https://github.com/google/adk-python/releases/tag/v2.15.0"
+        ],
+        "change_summary": "Bản 2.15.0 thêm pass@k, pass^k và chấm từng tham số tool; bản vá 2.15.1 phát hành ngày 25/11 xử lý lưu kết quả stream A2A và tương thích sampling với Anthropic SDK."
+      },
+      "article_markdown": "# Google ADK Python 2.15: đo agent đúng ít nhất một lần và đúng ở mọi lần chạy\n\n- story_id: google-adk-python-v2-15-eval-nov2026\n- update_id: initial\n- Ngày nguồn (UTC): 2026-11-25. Digest: 2026-11-27. Biên tập: 2026-11-27T06:31:54.509Z.\n\n## Có gì mới?\nBản 2.15.0 thêm pass@k, pass^k và chấm từng tham số tool; bản vá 2.15.1 phát hành ngày 25/11 xử lý lưu kết quả stream A2A và tương thích sampling với Anthropic SDK.\n\n## Cơ chế\nADK CLI đo riêng một test case thành công ít nhất một lần hoặc thành công ở mọi lần trong k lượt, rồi tổng hợp qua tập eval. Chấm tham số tool có thể cho điểm từng trường, thay vì chỉ tính đúng hoặc sai cả lần gọi. Bản 2.15.1 sửa phần lưu output của RemoteA2aAgent bằng cách hoàn tác hành vi lưu stream khi thiếu last_chunk, và sửa tương thích sampling qua các phiên bản Anthropic SDK.\n\n## Việc đáng thử\nVới một fixture yêu cầu giữ lại hai nguồn mâu thuẫn và chuyển cho người duyệt, chạy lại năm lần với input cố định. Đo cả thành công ít nhất một lần lẫn thành công cả năm lần. Các trường tool nhạy cảm có thể giữ tiêu chí bắt buộc riêng, không để điểm trung bình che lỗi.\n\n## Giới hạn\nHai metric được công bố trong 2.15.0 ngày 19/11; mục này gộp bản vá phát hành 25/11 UTC, không coi chúng là tính năng mới của 2.15.1. Release notes không chứng minh cải thiện chất lượng trên ứng dụng của bạn.\n\n[Nguồn gốc 1](https://github.com/google/adk-python/releases/tag/v2.15.1) · [Nguồn gốc 2](https://github.com/google/adk-python/releases/tag/v2.15.0)\n"
+    },
+    {
+      "record": {
+        "story_id": "openai-agents-python-v0-26-0-nov2026",
+        "update_id": "initial",
+        "title": "OpenAI Agents SDK 0.26.0 đổi thứ tự metadata MCP và kiểm Realtime cuối lượt",
+        "event_date": "2026-11-24",
+        "category": "agent_framework",
+        "canonical_url": "https://github.com/openai/openai-agents-python/releases/tag/v0.26.0",
+        "source_urls": [
+          "https://github.com/openai/openai-agents-python/releases/tag/v0.26.0"
+        ],
+        "change_summary": "Metadata truyền trực tiếp từng lần gọi MCP được ưu tiên hơn resolver và mặc định discovery; Realtime kiểm phần output còn lại khi kết thúc lượt."
+      },
+      "article_markdown": "# OpenAI Agents SDK 0.26.0 đổi thứ tự metadata MCP và kiểm Realtime cuối lượt\n\n- story_id: openai-agents-python-v0-26-0-nov2026\n- update_id: initial\n- Ngày nguồn (UTC): 2026-11-24. Digest: 2026-11-27. Biên tập: 2026-11-27T06:31:54.509Z.\n\n## Có gì mới?\nMetadata truyền trực tiếp từng lần gọi MCP được ưu tiên hơn resolver và mặc định discovery; Realtime kiểm phần output còn lại khi kết thúc lượt.\n\n## Cơ chế\nNếu cùng khóa metadata xuất hiện ở nhiều lớp, giá trị tường minh theo lần gọi đứng trước resolver của ứng dụng và mặc định discovery. Guardrail Realtime kiểm phần văn bản hoặc transcript âm thanh còn lại ở cuối lượt. Release cũng siết Storage mount trong Docker và yêu cầu ứng dụng cấp phép ảnh local cho Codex tool.\n\n## Việc đáng thử\nTrước khi nâng cấp, kiểm thử một tool có metadata trùng giữa ba nguồn và một lượt Realtime ngắn kết thúc ngay sau chunk cuối. Nếu ứng dụng dùng mount Docker hoặc ảnh local trong Codex tool, kiểm lại quyền và hành vi lỗi phù hợp.\n\n## Giới hạn\nCác thay đổi thuộc bản Python SDK 0.26.0, không phải sự thay đổi của chuẩn MCP hay mặc định ở mọi runtime. Ghi chú release không phải phép đo độ trễ hay bảo đảm guardrail phát hiện mọi lỗi.\n\n[Nguồn gốc 1](https://github.com/openai/openai-agents-python/releases/tag/v0.26.0)\n"
+    }
+  ]
+}
