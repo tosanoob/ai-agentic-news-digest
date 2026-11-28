@@ -1,0 +1,54 @@
+{
+  "digest_date": "2026-11-28",
+  "digest_markdown": "# AI Agentic Deep Research Digest · 28/11/2026\n\nBản bù sau lượt sáng không hoàn tất. Snapshot collector cùng ngày có lúc 11:56 giờ Việt Nam. Ba bài dưới đây là preprint nộp 25/11, xuất hiện trong feed ngày 27/11.\n\n1. **SkillsBench: điểm cộng từ việc chọn skill gần như biến mất trên lượt giữ lại.** Audit 7.554 lượt công khai: baseline cutoff tăng 2,92 điểm phần trăm khi replay, 4,5 khi hoán vị nhãn và 0,12 trên các lượt giữ lại (CI 95% −0,67 đến +0,93). [Phân tích](../articles/skillsbench-skill-lift-audit-nov2026/initial.md) · [Nguồn](https://arxiv.org/abs/2611.33943)\n2. **HoMe tối ưu cách agent dùng bộ nhớ, giảm token mỗi truy vấn.** Trên ReMe, LongMemEval-S tăng 0,888 → 0,916 và giảm 43,9K → 17,9K token/truy vấn; hiệu quả không giữ nguyên khi đổi benchmark. [Phân tích](../articles/home-memory-harness-optimization-nov2026/initial.md) · [Nguồn](https://arxiv.org/abs/2611.34624)\n3. **ExtractBench Pro: hệ tốt nhất trích đúng hoàn toàn 61/100 tài liệu khó.** Trên 100 tài liệu tổng hợp khó, Claude Code Opus 5.5 đúng hoàn toàn 61 tài liệu ở giới hạn ba giờ, còn 51 với ngưỡng 30 phút trên cùng đầu ra đã lưu. [Phân tích](../articles/extractbench-pro-document-extraction-nov2026/initial.md) · [Nguồn](https://arxiv.org/abs/2611.33791)\n\n**Coverage:** 5/5 feed · 407 dòng thô · 35 vào shortlist · 3 bài được chọn. Có 89 mục arXiv đủ điều kiện nhưng vượt trần shortlist; HoMe được tìm trong log thô và nằm ngoài bộ lọc chủ đề. [Log trước biên tập](https://github.com/tosanoob/ai-agentic-news-digest/blob/candidate-log/2026-11-28/latest.json).\n",
+  "items": [
+    {
+      "record": {
+        "story_id": "skillsbench-skill-lift-audit-nov2026",
+        "update_id": "initial",
+        "title": "SkillsBench: điểm cộng từ việc chọn skill gần như biến mất trên lượt giữ lại",
+        "event_date": "2026-11-25",
+        "category": "benchmark",
+        "canonical_url": "https://arxiv.org/abs/2611.33943",
+        "source_urls": [
+          "https://arxiv.org/abs/2611.33943v1",
+          "https://arxiv.org/html/2611.33943v1"
+        ],
+        "change_summary": "Audit 7.554 lượt công khai: baseline cutoff tăng 2,92 điểm phần trăm khi replay, 4,5 khi hoán vị nhãn và 0,12 trên các lượt giữ lại (CI 95% −0,67 đến +0,93)."
+      },
+      "article_markdown": "# SkillsBench: điểm cộng từ việc chọn skill gần như biến mất trên lượt giữ lại\n\n- Story ID: `skillsbench-skill-lift-audit-nov2026`\n- Update ID: `initial`\n- Ngày nguồn: 25/11/2026 (arXiv v1, preprint)\n- Ngày digest: 28/11/2026 (giờ Việt Nam), biên tập 2026-11-28T09:33:00Z\n\n### Cái mới và cơ chế\nNhóm tác giả rà grader và ghép 7.554 lượt chạy thành 1.421 cặp cấu hình–tác vụ có đủ hai điều kiện. Họ tìm thấy hai trường hợp kiểm chứng được bằng chạy grader và một trường hợp từ mã nguồn mà điều kiện chấm điểm chỉ được nói rõ trong skill. Ví dụ, một grader đọc giá trị đã tính trong tệp Excel, trong khi đề bài chỉ yêu cầu viết công thức.\n\nMột quy tắc bật/tắt skill dựa trên điểm không skill hơn luôn bật 2,92 điểm phần trăm khi replay, nhưng cũng hơn 4,5 điểm khi hoán vị nhãn để phá tín hiệu thật. Trên các lượt giữ lại riêng cho chấm điểm, chênh lệch còn +0,12 điểm (CI 95% −0,67 đến +0,93). Dùng chung các lần chạy ít ỏi để ra quyết định và tính điểm có thể ghi công cho nhiễu.\n\n### Dùng thế nào và giới hạn\nĐưa cùng tiêu chí thành công vào cả hai điều kiện; chọn ngưỡng trên tập phát triển và đo trên lượt mới. Thêm kiểm tra hoán vị nhãn nếu xây bộ chọn skill. Kết quả không chứng minh skill vô dụng hoặc mọi gate đều thất bại; đây là phân tích một snapshot với ít lượt cho mỗi cấu hình–tác vụ.\n\nNguồn: [arXiv v1](https://arxiv.org/abs/2611.33943v1) · [Bài đầy đủ](https://arxiv.org/html/2611.33943v1).\n"
+    },
+    {
+      "record": {
+        "story_id": "home-memory-harness-optimization-nov2026",
+        "update_id": "initial",
+        "title": "HoMe tối ưu cách agent dùng bộ nhớ, giảm token mỗi truy vấn",
+        "event_date": "2026-11-25",
+        "category": "paper",
+        "canonical_url": "https://arxiv.org/abs/2611.34624",
+        "source_urls": [
+          "https://arxiv.org/abs/2611.34624v1",
+          "https://arxiv.org/html/2611.34624v1"
+        ],
+        "change_summary": "Trên ReMe, LongMemEval-S tăng 0,888 → 0,916 và giảm 43,9K → 17,9K token/truy vấn; hiệu quả không giữ nguyên khi đổi benchmark."
+      },
+      "article_markdown": "# HoMe tối ưu cách agent dùng bộ nhớ, giảm token mỗi truy vấn\n\n- Story ID: `home-memory-harness-optimization-nov2026`\n- Update ID: `initial`\n- Ngày nguồn: 25/11/2026 (arXiv v1, preprint)\n- Ngày digest: 28/11/2026 (giờ Việt Nam), biên tập 2026-11-28T09:33:00Z\n\n### Cái mới và cơ chế\nHoMe dùng trace để nhóm lỗi, truy ngược về phiên và bộ phận gây lỗi, rồi thử bản sửa ở code, prompt hoặc cấu hình. Hệ thống dùng smoke test, lấy mẫu thích ứng và tái sử dụng bộ nhớ đã dựng khi thay đổi không ảnh hưởng bước xây bộ nhớ.\n\nTrên LongMemEval-S, điểm ReMe tăng từ 0,888 lên 0,916 và token trung bình mỗi truy vấn giảm từ 43,9K còn 17,9K. Trên BEAM-1M, điểm tăng 0,650 → 0,704, token giảm 101,8K → 60,4K dù số lần gọi model tăng 4,5 → 6,7.\n\n### Dùng thế nào và giới hạn\nKhi thử memory harness, log riêng token truy vấn, số lượt gọi, và tỷ lệ đúng ở từng nhóm như cập nhật kiến thức hoặc truy xuất qua nhiều phiên. Một số nhóm giảm điểm. Bản tối ưu trên LongMemEval-S chỉ đạt 0,639 trên BEAM-1M, dưới ReMe gốc 0,650; riêng quá trình tìm bản tốt trên BEAM dùng 185,2 triệu token theo bài. Tiết kiệm ở bước trả lời không đồng nghĩa rẻ từ đầu đến cuối.\n\nNguồn: [arXiv v1](https://arxiv.org/abs/2611.34624v1) · [Bài đầy đủ](https://arxiv.org/html/2611.34624v1).\n"
+    },
+    {
+      "record": {
+        "story_id": "extractbench-pro-document-extraction-nov2026",
+        "update_id": "initial",
+        "title": "ExtractBench Pro: hệ tốt nhất trích đúng hoàn toàn 61/100 tài liệu khó",
+        "event_date": "2026-11-25",
+        "category": "benchmark",
+        "canonical_url": "https://arxiv.org/abs/2611.33791",
+        "source_urls": [
+          "https://arxiv.org/abs/2611.33791v1",
+          "https://arxiv.org/html/2611.33791v1"
+        ],
+        "change_summary": "Trên 100 tài liệu tổng hợp khó, Claude Code Opus 5.5 đúng hoàn toàn 61 tài liệu ở giới hạn ba giờ, còn 51 với ngưỡng 30 phút trên cùng đầu ra đã lưu."
+      },
+      "article_markdown": "# ExtractBench Pro: hệ tốt nhất trích đúng hoàn toàn 61/100 tài liệu khó\n\n- Story ID: `extractbench-pro-document-extraction-nov2026`\n- Update ID: `initial`\n- Ngày nguồn: 25/11/2026 (arXiv v1, preprint)\n- Ngày digest: 28/11/2026 (giờ Việt Nam), biên tập 2026-11-28T09:33:00Z\n\n### Cái mới và cơ chế\nBộ benchmark tạo 100 tài liệu tổng hợp theo schema, với các tình huống như thuật ngữ riêng của từng tài liệu, sơ đồ quan hệ và phép tổng hợp có điều kiện. Nhóm thử 10 coding agent và 8 cấu hình API trích xuất. Ba kết quả đúng hoàn toàn cao nhất trong thiết lập chính là Claude Code Opus 5.5 (61/100), Codex GPT-6 Astra (59/100) và LlamaExtract Agentic Plus Max (56/100).\n\n### Dùng thế nào và giới hạn\nKhi áp ngưỡng 30 phút lên cùng các đầu ra đã lưu, kết quả của Opus giảm 61 → 51; đây không phải lượt chạy mới. Nếu làm agent đọc hồ sơ, chấm cả tỷ lệ đúng hết trường trong một tài liệu và độ đúng từng trường, đồng thời giữ giới hạn thời gian và theo dõi chi phí. Tập tổng hợp được thiết kế khó, không đại diện cho mọi PDF hay mọi cấu hình sản phẩm.\n\nNguồn: [arXiv v1](https://arxiv.org/abs/2611.33791v1) · [Bài đầy đủ](https://arxiv.org/html/2611.33791v1).\n"
+    }
+  ]
+}
